@@ -8,6 +8,7 @@ import com.github.tomakehurst.wiremock.stubbing.StubMapping;
 import it.valeriovaudi.onlyoneportal.accountservice.TestingFixture;
 import it.valeriovaudi.onlyoneportal.accountservice.config.RestMessageRepository;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.client.RestTemplate;
@@ -41,25 +42,23 @@ class RestMessageRepositoryTest {
         wireMockServer.stop();
     }
 
-  /*  @Test()
+    @Test()
     void whenCacheIsEmpty() throws JsonProcessingException {
         String body = objectMapper.writeValueAsString(TestingFixture.i18nsMessage());
 
         StubMapping stubMapping = stubFor(
-                get(urlPathEqualTo("/messages/account-service"))
+                get(urlPathEqualTo("/messages/account-service" ))
                         .willReturn(aResponse()
-                                .withHeader("Content-Type", "application/json")
+                                .withHeader("Content-Type", "application/json" )
                                 .withBody(body)));
 
         wireMockServer.addStubMapping(stubMapping);
 
-        StepVerifier.create(restMessageRepository.messages())
-                .expectNext(TestingFixture.i18nsMessage())
-                .verifyComplete();
+        Assertions.assertEquals(TestingFixture.i18nsMessage(), restMessageRepository.messages());
 
-        wireMockServer.verify(getRequestedFor(urlEqualTo("/messages/account-service")));
+        wireMockServer.verify(getRequestedFor(urlEqualTo("/messages/account-service" )));
     }
-
+ /*
     @Test
     void whenCacheIsFull() {
         // fill cache
