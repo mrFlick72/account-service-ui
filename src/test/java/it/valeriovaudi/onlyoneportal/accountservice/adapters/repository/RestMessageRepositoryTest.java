@@ -6,7 +6,6 @@ import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import com.github.tomakehurst.wiremock.stubbing.StubMapping;
 import it.valeriovaudi.onlyoneportal.accountservice.TestingFixture;
-import it.valeriovaudi.onlyoneportal.accountservice.adapters.RestMessageRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

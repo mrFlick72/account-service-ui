@@ -1,4 +1,4 @@
-package it.valeriovaudi.onlyoneportal.accountservice.adapters;
+package it.valeriovaudi.onlyoneportal.accountservice.adapters.repository;
 
 import it.valeriovaudi.onlyoneportal.accountservice.domain.repository.MessageRepository;
 import org.reactivestreams.Publisher;

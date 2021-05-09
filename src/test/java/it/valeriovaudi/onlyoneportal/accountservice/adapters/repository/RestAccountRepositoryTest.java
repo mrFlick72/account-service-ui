@@ -1,4 +1,4 @@
-package it.valeriovaudi.onlyoneportal.accountservice.adapters;
+package it.valeriovaudi.onlyoneportal.accountservice.adapters.repository;
 
 import static org.junit.jupiter.api.Assertions.*;
 
