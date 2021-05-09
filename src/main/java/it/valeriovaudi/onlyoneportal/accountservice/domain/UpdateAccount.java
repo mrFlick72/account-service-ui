@@ -16,7 +16,7 @@ public class UpdateAccount {
 
     public void execute(Account account) {
         LOGGER.info("fire account update event use case level");
-        accountRepository.update(account);
+        accountRepository.save(account);
     }
 
 

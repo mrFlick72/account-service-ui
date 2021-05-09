@@ -9,6 +9,4 @@ public interface AccountRepository {
     Account findByMail(String mail);
 
     Void save(Account account);
-
-    Void  update(Account account);
 }

@@ -1,5 +1,6 @@
 package it.valeriovaudi.onlyoneportal.accountservice.config;
 
+import it.valeriovaudi.onlyoneportal.accountservice.adapters.RestMessageRepository;
 import it.valeriovaudi.onlyoneportal.accountservice.adapters.cache.ReceiveMessageRequestFactory;
 import it.valeriovaudi.onlyoneportal.accountservice.domain.repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Value;
