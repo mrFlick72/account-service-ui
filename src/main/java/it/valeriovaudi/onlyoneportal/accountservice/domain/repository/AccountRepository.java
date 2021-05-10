@@ -1,12 +1,10 @@
 package it.valeriovaudi.onlyoneportal.accountservice.domain.repository;
 
-import it.valeriovaudi.onlyoneportal.accountservice.domain.model.Account;
-import org.reactivestreams.Publisher;
-
+import it.valeriovaudi.onlyoneportal.accountservice.web.representation.Account;
 
 public interface AccountRepository {
 
     Account findByMail(String mail);
 
-    Void save(Account account);
+    void save(Account account);
 }

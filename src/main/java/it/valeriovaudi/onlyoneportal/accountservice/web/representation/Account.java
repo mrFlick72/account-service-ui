@@ -7,7 +7,7 @@ import lombok.ToString;
 @Data
 @ToString
 @EqualsAndHashCode
-public class AccountRepresentation {
+public class Account {
 
     private String firstName;
     private String lastName;
@@ -18,9 +18,9 @@ public class AccountRepresentation {
 
     private String phone;
 
-    public AccountRepresentation() { }
+    public Account() { }
 
-    public AccountRepresentation(String firstName, String lastName, String birthDate, String mail, String phone) {
+    public Account(String firstName, String lastName, String birthDate, String mail, String phone) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;

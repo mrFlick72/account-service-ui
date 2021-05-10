@@ -1,9 +1,7 @@
 package it.valeriovaudi.onlyoneportal.accountservice;
 
 
-import it.valeriovaudi.onlyoneportal.accountservice.domain.model.Account;
-import it.valeriovaudi.onlyoneportal.accountservice.domain.model.Date;
-import it.valeriovaudi.onlyoneportal.accountservice.domain.model.Phone;
+import it.valeriovaudi.onlyoneportal.accountservice.web.representation.Account;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
@@ -18,10 +16,9 @@ public class TestingFixture {
     public static Account anAccount() {
         return new Account("FIRST_NAME",
                 "LAST_NAME",
-                Date.dateFor("01/01/1970"),
+                "01/01/1970",
                 "user.mail@mail.com",
-                Phone.nullValue(),
-                Locale.ENGLISH
+                ""
         );
     }
 
@@ -33,7 +30,7 @@ public class TestingFixture {
         return Map.of("key1", "value1");
     }
 
-    public static String ACCOUNT_MAIL = "user.mail@mail.com";
+    public static final String ACCOUNT_MAIL = "user.mail@mail.com";
 
     public static ReactiveRedisTemplate newReactiveRedisTemplate() {
         RedisSerializationContext<Object, Object> serializationContextBuilder = RedisSerializationContext.java();

@@ -1,7 +1,7 @@
 package it.valeriovaudi.onlyoneportal.accountservice.domain;
 
-import it.valeriovaudi.onlyoneportal.accountservice.domain.model.Account;
 import it.valeriovaudi.onlyoneportal.accountservice.domain.repository.AccountRepository;
+import it.valeriovaudi.onlyoneportal.accountservice.web.representation.Account;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

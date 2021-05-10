@@ -12,6 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Map;
 
+import static it.valeriovaudi.onlyoneportal.accountservice.TestingFixture.ACCOUNT_MAIL;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -28,7 +29,7 @@ class I18nMessagesEndPointTest {
 
 
     @Test
-    @WithMockOidcUser(email= "AN_EMAIL", authorities = {})
+    @WithMockOidcUser(email= ACCOUNT_MAIL, authorities = {})
     void whenI18nAreFound() throws Exception {
         var objectMapper = new ObjectMapper();
         Map<String, String> expected = Map.of("key1", "prop1");
