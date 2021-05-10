@@ -4,8 +4,6 @@ import it.valeriovaudi.onlyoneportal.accountservice.domain.repository.AccountRep
 import it.valeriovaudi.onlyoneportal.accountservice.web.representation.Account;
 import org.springframework.web.client.RestTemplate;
 
-import java.net.URI;
-
 public class RestAccountRepository implements AccountRepository {
     private final String baseUrl;
     private final String path;
@@ -18,8 +16,8 @@ public class RestAccountRepository implements AccountRepository {
     }
 
     @Override
-    public Account findByMail(String mail) {
-        return null;
+    public Account findAnAccount() {
+        return restTemplate.getForObject(baseUrl + path, Account.class);
     }
 
     @Override

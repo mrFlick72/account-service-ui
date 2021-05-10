@@ -35,9 +35,9 @@ class UserAccountEndPointTest {
     private UpdateAccount updateAccount;
 
     @Test
-    @WithMockOidcUser(email = ACCOUNT_MAIL, authorities = "ACCOUNT" )
+    @WithMockOidcUser(email = ACCOUNT_MAIL, authorities = "ACCOUNT")
     void whenGetAUserAccountDetails() throws Exception {
-        given(accountRepository.findByMail("user.mail@mail.com" ))
+        given(accountRepository.findAnAccount())
                 .willReturn(TestingFixture.anAccount());
 
 
@@ -48,7 +48,7 @@ class UserAccountEndPointTest {
 
 
     @Test
-    @WithMockOidcUser(email = ACCOUNT_MAIL, authorities = "ACCOUNT" )
+    @WithMockOidcUser(email = ACCOUNT_MAIL, authorities = "ACCOUNT")
     void whenUpdateAUserAccountDetails() throws Exception {
         Account account = TestingFixture.anAccount();
 

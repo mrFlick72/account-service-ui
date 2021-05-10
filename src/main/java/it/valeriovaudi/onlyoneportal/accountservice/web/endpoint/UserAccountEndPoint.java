@@ -37,11 +37,7 @@ public class UserAccountEndPoint {
     public RouterFunction accountSiteEndPointRoute() {
         return RouterFunctions.route()
                 .GET(ENDPOINT_PREFIX,
-                        serverRequest -> serverRequest.principal()
-                                .map(vAuthenticatorUserNameResolver::getUserNameFor)
-                                .map(accountRepository::findByMail)
-                                .map(accountRepresentation -> ServerResponse.ok().body(accountRepresentation))
-                                .orElse(ServerResponse.status(HttpStatus.INTERNAL_SERVER_ERROR).build())
+                        serverRequest -> ServerResponse.ok().body(accountRepository.findAnAccount())
                 )
 
                 .PUT(ENDPOINT_PREFIX,
