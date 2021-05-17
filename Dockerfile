@@ -1,7 +1,7 @@
 FROM openjdk:11
 
-ADD target/account-service.jar /usr/local/account-service/
+ADD target/account-service-ui.jar /usr/local/account-service-ui/
 
-WORKDIR /usr/local/account-service/
+WORKDIR /usr/local/account-service-ui/
 
-CMD ["java", "-jar", "account-service.jar"]
+CMD ["java", "-jar", "account-service-ui.jar"]
