@@ -26,10 +26,6 @@ jobs:
 
       - name: Build
         run: |
-          mvn clean install -DskipTests
-
-      - name: Test
-        run: |
           mvn clean install
 
       - name: docker push
