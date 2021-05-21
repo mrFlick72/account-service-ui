@@ -7,13 +7,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.actuate.autoconfigure.metrics.MeterRegistryCustomizer;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class AccountServiceApplication {
-
-    private final static Logger LOGGER = LoggerFactory.getLogger(AccountServiceApplication.class);
 
     public static void main(String[] args) {
         SpringApplication.run(AccountServiceApplication.class, args);

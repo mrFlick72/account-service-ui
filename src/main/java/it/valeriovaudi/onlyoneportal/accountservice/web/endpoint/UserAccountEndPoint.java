@@ -49,7 +49,8 @@ public class UserAccountEndPoint {
                                     return ServerResponse.noContent().build();
                                 })
                                 .orElse(ServerResponse.status(HttpStatus.INTERNAL_SERVER_ERROR).build())
-                ).build();
+                )
+                .build();
     }
 
     private Function<String, Optional<Account>> fromDomainToRepresentation(ServerRequest serverRequest) {
