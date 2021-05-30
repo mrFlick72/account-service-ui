@@ -1,6 +1,5 @@
 package it.valeriovaudi.onlyoneportal.accountservice.web.endpoint;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.valeriovaudi.onlyoneportal.accountservice.domain.repository.MessageRepository;
 import it.valeriovaudi.onlyoneportal.accountservice.support.WithMockOidcUser;
