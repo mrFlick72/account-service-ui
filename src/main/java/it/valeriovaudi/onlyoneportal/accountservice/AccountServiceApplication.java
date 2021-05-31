@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 
 @EnableCaching
@@ -26,8 +27,8 @@ public class AccountServiceApplication {
 
 
     @Bean
-    public RedisOAuth2AuthorizedClientService redisOAuth2AuthorizedClientService(RedisTemplate redisTemplate,
-                                                                                 ClientRegistrationRepository clientRegistrationRepository) {
+    public OAuth2AuthorizedClientService redisOAuth2AuthorizedClientService(RedisTemplate redisTemplate,
+                                                                            ClientRegistrationRepository clientRegistrationRepository) {
         return new RedisOAuth2AuthorizedClientService(redisTemplate, clientRegistrationRepository);
     }
 }

@@ -30,7 +30,6 @@ public class OAuth2WithSecurityContextFactory implements WithSecurityContextFact
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
 
-
         var user = new DefaultOidcUser(authorityGrants, new OidcIdToken("A_TOKEN",
                 Instant.now(),
                 Instant.now().plusSeconds(100),

@@ -1,18 +1,23 @@
 package it.valeriovaudi.onlyoneportal.accountservice.web.endpoint;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import it.valeriovaudi.onlyoneportal.accountservice.adapters.repository.RestMessageRepository;
 import it.valeriovaudi.onlyoneportal.accountservice.domain.repository.MessageRepository;
 import it.valeriovaudi.onlyoneportal.accountservice.support.WithMockOidcUser;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
 
 import static it.valeriovaudi.onlyoneportal.accountservice.TestingFixture.ACCOUNT_MAIL;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -24,11 +29,19 @@ class I18nMessagesEndPointTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private MessageRepository messageRepository;
+    private RestMessageRepository messageRepository;
 
+    @MockBean
+    private ClientRegistrationRepository clientRegistrationRepository;
+
+    @MockBean
+    private OAuth2AuthorizedClientService redisOAuth2AuthorizedClientService;
+
+    @MockBean
+    private RestTemplate budgetRestTemplate;
 
     @Test
-    @WithMockOidcUser(email= ACCOUNT_MAIL, authorities = {})
+    @WithMockOidcUser(email = ACCOUNT_MAIL, authorities = "ACCOUNT")
     void whenI18nAreFound() throws Exception {
         var objectMapper = new ObjectMapper();
         Map<String, String> expected = Map.of("key1", "prop1");
