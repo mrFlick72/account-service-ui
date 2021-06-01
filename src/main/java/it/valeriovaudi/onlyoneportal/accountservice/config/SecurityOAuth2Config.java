@@ -47,7 +47,8 @@ public class SecurityOAuth2Config extends WebSecurityConfigurerAdapter {
                 .authorizeRequests().anyRequest().hasAnyRole(grantedRole)
                 .and().oauth2Login().defaultSuccessUrl("/site/index.html")
                 .userInfoEndpoint()
-                .oidcUserService(vAuthenticatorOidcUserService());
+                .oidcUserService(vAuthenticatorOidcUserService())
+                .and().and().logout().clearAuthentication(true);
     }
 
     public VAuthenticatorOidcUserService vAuthenticatorOidcUserService() {
