@@ -22,11 +22,11 @@ jobs:
         run: |
           git clone https://github.com/mrFlick72/client-security-starter.git
           cd client-security-starter
-          mvn clean install -DskipTests
+          mvn clean install
 
       - name: Build
         run: |
-          mvn clean install
+          mvn clean install -DskipTests
 
       - name: docker push
         run: |
