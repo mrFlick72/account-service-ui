@@ -41,14 +41,13 @@ public class SecurityOAuth2Config extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http.headers().frameOptions().disable().and().csrf().disable()
                 .authorizeRequests().mvcMatchers("/actuator/**", "/oidc_logout.html").permitAll()
                 .and()
                 .authorizeRequests().anyRequest().hasAnyRole(grantedRole)
                 .and().oauth2Login().defaultSuccessUrl("/site/index.html")
                 .userInfoEndpoint()
-                .oidcUserService(vAuthenticatorOidcUserService())
-                .and().and().logout().clearAuthentication(true);
+                .oidcUserService(vAuthenticatorOidcUserService());
     }
 
     public VAuthenticatorOidcUserService vAuthenticatorOidcUserService() {
