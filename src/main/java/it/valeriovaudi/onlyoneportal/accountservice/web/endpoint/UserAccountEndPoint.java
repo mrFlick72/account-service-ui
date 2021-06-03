@@ -4,20 +4,18 @@ import it.valeriovaudi.onlyoneportal.accountservice.domain.UpdateAccount;
 import it.valeriovaudi.onlyoneportal.accountservice.domain.repository.AccountRepository;
 import it.valeriovaudi.onlyoneportal.accountservice.web.representation.Account;
 import it.valeriovaudi.vauthenticator.security.clientsecuritystarter.user.VAuthenticatorUserNameResolver;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.servlet.function.RouterFunction;
-import org.springframework.web.servlet.function.RouterFunctions;
-import org.springframework.web.servlet.function.ServerRequest;
-import org.springframework.web.servlet.function.ServerResponse;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.ServletException;
-import java.io.IOException;
-import java.util.Optional;
-import java.util.function.Function;
+import java.security.Principal;
 
-@Configuration
+import static org.springframework.http.ResponseEntity.noContent;
+import static org.springframework.http.ResponseEntity.ok;
+
+@RestController
 public class UserAccountEndPoint {
 
     private final static String ENDPOINT_PREFIX = "/user-account";
@@ -33,36 +31,19 @@ public class UserAccountEndPoint {
         this.updateAccount = updateAccount;
     }
 
-    @Bean
-    public RouterFunction accountSiteEndPointRoute() {
-        return RouterFunctions.route()
-                .GET(ENDPOINT_PREFIX,
-                        serverRequest -> ServerResponse.ok().body(accountRepository.findAnAccount())
-                )
-
-                .PUT(ENDPOINT_PREFIX,
-                        serverRequest -> serverRequest.principal()
-                                .map(vAuthenticatorUserNameResolver::getUserNameFor)
-                                .flatMap(fromDomainToRepresentation(serverRequest))
-                                .map(account -> {
-                                    updateAccount.execute(account);
-                                    return ServerResponse.noContent().build();
-                                })
-                                .orElse(ServerResponse.status(HttpStatus.INTERNAL_SERVER_ERROR).build())
-                )
-                .build();
+    @GetMapping(ENDPOINT_PREFIX)
+    public ResponseEntity getAccountDetails() {
+        return ok().body(accountRepository.findAnAccount());
     }
 
-    private Function<String, Optional<Account>> fromDomainToRepresentation(ServerRequest serverRequest) {
-        return userName -> {
-            try {
-                Account body = serverRequest.body(Account.class);
-                body.setMail(userName);
-                return Optional.of(body);
-            } catch (ServletException | IOException e) {
-                return Optional.empty();
-            }
-        };
+    @PutMapping(ENDPOINT_PREFIX)
+    public ResponseEntity updateAccountDetails(Principal principal,
+                                               @RequestBody Account account) {
+
+        String username = vAuthenticatorUserNameResolver.getUserNameFor(principal);
+        account.setMail(username);
+        updateAccount.execute(account);
+        return noContent().build();
     }
 
 }

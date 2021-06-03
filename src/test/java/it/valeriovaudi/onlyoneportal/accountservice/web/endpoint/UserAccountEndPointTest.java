@@ -9,8 +9,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.client.RestTemplate;
 
 import static it.valeriovaudi.onlyoneportal.accountservice.TestingFixture.ACCOUNT_MAIL;
 import static org.mockito.BDDMockito.given;
@@ -33,6 +37,14 @@ class UserAccountEndPointTest {
 
     @MockBean
     private UpdateAccount updateAccount;
+    @MockBean
+    private ClientRegistrationRepository clientRegistrationRepository;
+
+    @MockBean
+    private OAuth2AuthorizedClientService redisOAuth2AuthorizedClientService;
+
+    @MockBean
+    private RestTemplate budgetRestTemplate;
 
     @Test
     @WithMockOidcUser(email = ACCOUNT_MAIL, authorities = "ACCOUNT")

@@ -36,16 +36,19 @@ public class SecurityOAuth2Config extends WebSecurityConfigurerAdapter {
     @Value("${vauthenticator.client.registrationId}")
     private String registrationId;
 
-    @Value("${granted-role.account-service}")
+    @Value("${granted-role.account-service:}")
     private String grantedRole;
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
-                .authorizeRequests().mvcMatchers("/actuator/**", "/oidc_logout.html").permitAll()
-                .and()
-                .authorizeRequests().anyRequest().hasAnyRole(grantedRole)
-                .and().oauth2Login().defaultSuccessUrl("/site/index.html")
+                .authorizeRequests().mvcMatchers("/actuator/**", "/oidc_logout.html").permitAll();
+
+        if (!"".equals(grantedRole)) {
+            http.authorizeRequests().anyRequest().hasAnyRole(grantedRole);
+        }
+
+        http.oauth2Login().defaultSuccessUrl("/site/index.html")
                 .userInfoEndpoint()
                 .oidcUserService(vAuthenticatorOidcUserService());
     }
