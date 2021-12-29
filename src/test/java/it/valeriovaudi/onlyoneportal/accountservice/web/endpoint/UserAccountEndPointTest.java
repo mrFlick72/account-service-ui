@@ -5,6 +5,7 @@ import it.valeriovaudi.onlyoneportal.accountservice.domain.UpdateAccount;
 import it.valeriovaudi.onlyoneportal.accountservice.domain.repository.AccountRepository;
 import it.valeriovaudi.onlyoneportal.accountservice.support.WithMockOidcUser;
 import it.valeriovaudi.onlyoneportal.accountservice.web.representation.Account;
+import it.valeriovaudi.vauthenticator.security.clientsecuritystarter.session.management.OAuth2AuthorizationRequestResolverWithSessionState;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -36,7 +37,11 @@ class UserAccountEndPointTest {
     private AccountRepository accountRepository;
 
     @MockBean
+    private OAuth2AuthorizationRequestResolverWithSessionState oAuth2AuthorizationRequestResolverWithSessionState;
+
+    @MockBean
     private UpdateAccount updateAccount;
+
     @MockBean
     private ClientRegistrationRepository clientRegistrationRepository;
 

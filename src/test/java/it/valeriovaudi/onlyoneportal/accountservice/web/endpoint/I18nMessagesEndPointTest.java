@@ -3,6 +3,7 @@ package it.valeriovaudi.onlyoneportal.accountservice.web.endpoint;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.valeriovaudi.onlyoneportal.accountservice.adapters.repository.RestMessageRepository;
 import it.valeriovaudi.onlyoneportal.accountservice.support.WithMockOidcUser;
+import it.valeriovaudi.vauthenticator.security.clientsecuritystarter.session.management.OAuth2AuthorizationRequestResolverWithSessionState;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -30,6 +31,9 @@ class I18nMessagesEndPointTest {
 
     @MockBean
     private RestMessageRepository messageRepository;
+
+    @MockBean
+    private OAuth2AuthorizationRequestResolverWithSessionState oAuth2AuthorizationRequestResolverWithSessionState;
 
     @MockBean
     private ClientRegistrationRepository clientRegistrationRepository;
