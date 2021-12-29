@@ -33,7 +33,7 @@ public class SecurityOAuth2Config extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http.csrf().disable().headers().frameOptions().sameOrigin().and()
                 .authorizeRequests().mvcMatchers("/actuator/**", "/oidc_logout.html").permitAll();
 
         if (!"".equals(grantedRole)) {
