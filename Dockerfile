@@ -1,4 +1,4 @@
-FROM openjdk:11
+FROM openjdk:17
 
 ADD target/account-service-ui.jar /usr/local/account-service-ui/
 
