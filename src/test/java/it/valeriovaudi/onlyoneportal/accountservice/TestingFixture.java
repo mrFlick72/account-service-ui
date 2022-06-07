@@ -2,6 +2,7 @@ package it.valeriovaudi.onlyoneportal.accountservice;
 
 
 import it.valeriovaudi.onlyoneportal.accountservice.web.representation.Account;
+import it.valeriovaudi.onlyoneportal.accountservice.web.representation.UserInfo;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
@@ -41,4 +42,13 @@ public class TestingFixture {
         return new ReactiveRedisTemplate(connectionFactory, serializationContextBuilder);
     }
 
+    public static UserInfo aUserInfo() {
+        return new UserInfo("FIRST_NAME",
+                "LAST_NAME",
+                "01/01/1970",
+                "user.mail@mail.com",
+                ""
+        );
+
+    }
 }
