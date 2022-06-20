@@ -1,5 +1,6 @@
 package it.valeriovaudi.onlyoneportal.accountservice.web.endpoint;
 
+import it.valeriovaudi.onlyoneportal.accountservice.adapters.date.Dates;
 import it.valeriovaudi.onlyoneportal.accountservice.domain.UpdateAccount;
 import it.valeriovaudi.onlyoneportal.accountservice.domain.repository.AccountRepository;
 import it.valeriovaudi.onlyoneportal.accountservice.web.representation.Account;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
+import java.time.temporal.TemporalAccessor;
 
 import static org.springframework.http.ResponseEntity.noContent;
 import static org.springframework.http.ResponseEntity.ok;
@@ -33,16 +35,32 @@ public class UserAccountEndPoint {
 
     @GetMapping(ENDPOINT_PREFIX)
     public ResponseEntity getAccountDetails() {
-        return ok().body(accountRepository.findAnAccount());
+        Account account = accountRepository.findAnAccount();
+        TemporalAccessor parsedBirthDate = Dates.ISO_DATE_FORMATTER.parse(account.getBirthDate());
+        return ok().body(
+                new Account(
+                        account.getFirstName(),
+                        account.getLastName(),
+                        Dates.UI_DATE_FORMATTER.format(parsedBirthDate),
+                        account.getMail(),
+                        account.getPhone()
+                )
+        );
     }
 
     @PutMapping(ENDPOINT_PREFIX)
     public ResponseEntity updateAccountDetails(Principal principal,
                                                @RequestBody Account account) {
-
+        TemporalAccessor parsedBirthDate = Dates.UI_DATE_FORMATTER.parse(account.getBirthDate());
         String username = vAuthenticatorUserNameResolver.getUserNameFor(principal);
         account.setMail(username);
-        updateAccount.execute(account);
+        updateAccount.execute(new Account(
+                account.getFirstName(),
+                account.getLastName(),
+                Dates.ISO_DATE_FORMATTER.format(parsedBirthDate),
+                account.getMail(),
+                account.getPhone()
+        ));
         return noContent().build();
     }
 

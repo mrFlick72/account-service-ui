@@ -4,6 +4,8 @@ import it.valeriovaudi.onlyoneportal.accountservice.adapters.cache.I18nMessagesC
 import it.valeriovaudi.onlyoneportal.accountservice.adapters.cache.ReceiveMessageRequestFactory;
 import it.valeriovaudi.onlyoneportal.accountservice.adapters.repository.RestAccountRepository;
 import it.valeriovaudi.onlyoneportal.accountservice.adapters.repository.RestMessageRepository;
+import it.valeriovaudi.onlyoneportal.accountservice.adapters.repository.VAuthenticatorAccountRepository;
+import it.valeriovaudi.onlyoneportal.accountservice.domain.repository.AccountRepository;
 import it.valeriovaudi.onlyoneportal.accountservice.domain.repository.MessageRepository;
 import it.valeriovaudi.vauthenticator.security.clientsecuritystarter.filter.BearerTokenInterceptor;
 import it.valeriovaudi.vauthenticator.security.clientsecuritystarter.filter.OAuth2TokenResolver;
@@ -47,11 +49,10 @@ public class RepositoryConfig {
     }
 
     @Bean
-    public RestAccountRepository accountRepository(
-            @Value("${account-service.base-url}") String baseUrl,
-            @Value("${account-service.path}") String path,
+    public AccountRepository accountRepository(
+            @Value("${vauthenticator.host}") String baseUrl,
             RestTemplate accountRestTemplate) {
-        return new RestAccountRepository(baseUrl, path, accountRestTemplate);
+        return new VAuthenticatorAccountRepository(baseUrl, accountRestTemplate);
     }
 
     @Bean
