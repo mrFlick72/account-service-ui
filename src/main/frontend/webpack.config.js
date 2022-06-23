@@ -1,7 +1,7 @@
 var path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const BUID_DIR = path.resolve(__dirname + "../../../../target/classes/templates");
+const BUID_DIR = path.resolve(__dirname + "../../../../target/classes/static");
 
 module.exports = {
     mode: 'production',
