@@ -32,16 +32,16 @@ jobs:
           cd client-security-starter
           mvn clean install -q
 
+      - name: Build
+        run: |
+          export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+          mvn install
+
       - name: Build frontend artifacts
         run: |
           cd src/main/frontend
           npm install
           npm run-script build
-
-      - name: Build
-        run: |
-          export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
-          mvn install
 
       - name: docker push
         run: |
