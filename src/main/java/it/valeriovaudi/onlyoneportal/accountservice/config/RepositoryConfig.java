@@ -47,7 +47,7 @@ public class RepositoryConfig {
 
     @Bean
     public AccountRepository accountRepository(
-            @Value("${vauthenticator.host}") String baseUrl,
+            @Value("${vauthenticator.backChannelBaseUrl}") String baseUrl,
             RestTemplate accountRestTemplate) {
         return new VAuthenticatorAccountRepository(baseUrl, accountRestTemplate);
     }
