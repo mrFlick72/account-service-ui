@@ -41,7 +41,6 @@ public class SecurityOAuth2Config extends WebSecurityConfigurerAdapter {
         }
 
         http.logout()
-                .deleteCookies("opbs")
                 .invalidateHttpSession(true)
                 .logoutSuccessUrl("/site/index.html");
 
