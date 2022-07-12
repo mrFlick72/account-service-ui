@@ -40,6 +40,10 @@ public class SecurityOAuth2Config extends WebSecurityConfigurerAdapter {
             http.authorizeRequests().anyRequest().hasAnyRole(grantedRole);
         }
 
+        http.logout()
+                .invalidateHttpSession(true)
+                .logoutSuccessUrl("/site/index.html");
+
         http.oauth2Login().defaultSuccessUrl("/site/index.html")
                 .userInfoEndpoint()
                 .oidcUserService(vAuthenticatorOidcUserService())

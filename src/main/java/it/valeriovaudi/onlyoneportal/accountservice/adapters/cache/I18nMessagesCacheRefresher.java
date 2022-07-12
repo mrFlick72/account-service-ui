@@ -42,9 +42,7 @@ public class I18nMessagesCacheRefresher implements ApplicationRunner {
     public Flux listen() {
         return whileLoopFluxProvider
                 .delayElements(sleepingTime)
-                .log()
                 .flatMap(req -> handleMessage())
-                .log()
                 .flatMap(signal -> Mono.fromCallable(() -> {
                             logger.info("cache refresh event received ");
                             return Objects.requireNonNull(cacheManager.getCache("account-service-ui.i18n.messages")).invalidate();

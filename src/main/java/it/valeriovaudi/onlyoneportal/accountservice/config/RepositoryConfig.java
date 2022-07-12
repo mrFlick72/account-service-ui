@@ -2,14 +2,13 @@ package it.valeriovaudi.onlyoneportal.accountservice.config;
 
 import it.valeriovaudi.onlyoneportal.accountservice.adapters.cache.I18nMessagesCacheRefresher;
 import it.valeriovaudi.onlyoneportal.accountservice.adapters.cache.ReceiveMessageRequestFactory;
-import it.valeriovaudi.onlyoneportal.accountservice.adapters.repository.RestAccountRepository;
 import it.valeriovaudi.onlyoneportal.accountservice.adapters.repository.RestMessageRepository;
+import it.valeriovaudi.onlyoneportal.accountservice.adapters.repository.VAuthenticatorAccountRepository;
+import it.valeriovaudi.onlyoneportal.accountservice.domain.repository.AccountRepository;
 import it.valeriovaudi.onlyoneportal.accountservice.domain.repository.MessageRepository;
 import it.valeriovaudi.vauthenticator.security.clientsecuritystarter.filter.BearerTokenInterceptor;
 import it.valeriovaudi.vauthenticator.security.clientsecuritystarter.filter.OAuth2TokenResolver;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.r2dbc.R2dbcProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
@@ -47,11 +46,10 @@ public class RepositoryConfig {
     }
 
     @Bean
-    public RestAccountRepository accountRepository(
-            @Value("${account-service.base-url}") String baseUrl,
-            @Value("${account-service.path}") String path,
+    public AccountRepository accountRepository(
+            @Value("${vauthenticator.backChannelHost}") String baseUrl,
             RestTemplate accountRestTemplate) {
-        return new RestAccountRepository(baseUrl, path, accountRestTemplate);
+        return new VAuthenticatorAccountRepository(baseUrl, accountRestTemplate);
     }
 
     @Bean

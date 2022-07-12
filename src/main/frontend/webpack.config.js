@@ -1,5 +1,4 @@
 var path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const BUID_DIR = path.resolve(__dirname + "../../../../target/classes/static");
 
@@ -11,13 +10,6 @@ module.exports = {
     resolve: {
         extensions: [".js", ".jsx"]
     },
-    plugins: [
-        new HtmlWebpackPlugin({
-            chunks: ['account'],
-            filename: "site/index.html",
-            template: path.resolve(__dirname, "../resources/static/site/index.html")
-        })
-    ],
     module: {
         rules: [
             {
@@ -38,8 +30,7 @@ module.exports = {
         ]
     },
     output: {
-        publicPath: "/account",
-        filename: 'bundle/[name]_bundle.js',
+        filename: 'app/bundle.js',
         path: BUID_DIR
     }
 };

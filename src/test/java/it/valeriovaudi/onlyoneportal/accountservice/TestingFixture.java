@@ -2,12 +2,8 @@ package it.valeriovaudi.onlyoneportal.accountservice;
 
 
 import it.valeriovaudi.onlyoneportal.accountservice.web.representation.Account;
-import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
-import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
-import org.springframework.data.redis.core.ReactiveRedisTemplate;
-import org.springframework.data.redis.serializer.RedisSerializationContext;
+import it.valeriovaudi.onlyoneportal.accountservice.web.representation.UserInfo;
 
-import java.util.Locale;
 import java.util.Map;
 
 public class TestingFixture {
@@ -16,7 +12,7 @@ public class TestingFixture {
     public static Account anAccount() {
         return new Account("FIRST_NAME",
                 "LAST_NAME",
-                "01/01/1970",
+                "1970-01-01",
                 "user.mail@mail.com",
                 ""
         );
@@ -32,13 +28,13 @@ public class TestingFixture {
 
     public static final String ACCOUNT_MAIL = "user.mail@mail.com";
 
-    public static ReactiveRedisTemplate newReactiveRedisTemplate() {
-        RedisSerializationContext<Object, Object> serializationContextBuilder = RedisSerializationContext.java();
-        RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration("localhost", 36379);
-        LettuceConnectionFactory connectionFactory = new LettuceConnectionFactory(configuration);
-        connectionFactory.afterPropertiesSet();
+    public static UserInfo aUserInfo() {
+        return new UserInfo("FIRST_NAME",
+                "LAST_NAME",
+                "1970-01-01",
+                "user.mail@mail.com",
+                ""
+        );
 
-        return new ReactiveRedisTemplate(connectionFactory, serializationContextBuilder);
     }
-
 }

@@ -6,7 +6,9 @@ import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import com.github.tomakehurst.wiremock.stubbing.StubMapping;
 import it.valeriovaudi.onlyoneportal.accountservice.TestingFixture;
+import it.valeriovaudi.onlyoneportal.accountservice.domain.repository.AccountRepository;
 import it.valeriovaudi.onlyoneportal.accountservice.web.representation.Account;
+import it.valeriovaudi.onlyoneportal.accountservice.web.representation.UserInfo;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,22 +17,23 @@ import org.springframework.web.client.RestTemplate;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
+import static org.junit.jupiter.api.Assertions.*;
 
-class RestAccountRepositoryTest {
+class VAuthenticatorAccountRepositoryTest {
+
 
     private ObjectMapper objectMapper = new ObjectMapper();
     private WireMockServer wireMockServer = new WireMockServer(WireMockConfiguration.options().dynamicPort());
 
-    RestAccountRepository restMessageRepository;
+    AccountRepository restMessageRepository;
 
     @BeforeEach
     void setUp() {
         wireMockServer.start();
         configureFor("localhost", wireMockServer.port());
 
-        restMessageRepository = new RestAccountRepository(
+        restMessageRepository = new VAuthenticatorAccountRepository(
                 wireMockServer.baseUrl(),
-                "/account/user-account",
                 new RestTemplate()
         );
     }
@@ -43,10 +46,11 @@ class RestAccountRepositoryTest {
 
     @Test
     void whenFindAnAccount() throws JsonProcessingException {
+        UserInfo userInfo = TestingFixture.aUserInfo();
         Account account = TestingFixture.anAccount();
-        String body = objectMapper.writeValueAsString(account);
+        String body = objectMapper.writeValueAsString(userInfo);
         StubMapping stubMapping = stubFor(
-                get(urlEqualTo("/account/user-account"))
+                get(urlEqualTo("/userinfo"))
                         .willReturn(aResponse()
                                 .withHeader("Content-Type", "application/json")
                                 .withBody(body))
@@ -64,7 +68,7 @@ class RestAccountRepositoryTest {
         Account account = TestingFixture.anAccount();
         String body = objectMapper.writeValueAsString(account);
         StubMapping stubMapping = stubFor(
-                put(urlEqualTo("/account/user-account"))
+                put(urlEqualTo("/api/accounts"))
                         .withRequestBody(equalTo(body))
                         .withHeader("Content-Type", equalTo("application/json"))
         );
@@ -73,7 +77,7 @@ class RestAccountRepositoryTest {
         restMessageRepository.save(account);
 
         wireMockServer.verify(
-                putRequestedFor(urlEqualTo("/account/user-account"))
+                putRequestedFor(urlEqualTo("/api/accounts"))
                         .withHeader("Content-Type", equalTo("application/json"))
                         .withRequestBody(equalTo(body))
         );
