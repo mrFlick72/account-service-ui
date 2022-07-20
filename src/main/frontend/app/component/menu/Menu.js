@@ -1,6 +1,6 @@
 import React from "react"
 
-export default ({links, messages, children}) => (
+export default ({links, messages}) => (
     <div className="container-fluid" style={{"margin-bottom": "15px"}}>
         <nav className="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navBar"
