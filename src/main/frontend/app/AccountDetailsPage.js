@@ -1,9 +1,9 @@
 import React from 'react'
 import Menu from "./component/menu/Menu";
 import {AccountRepository} from "./domain/repository/AccountRepository";
-import DatePicker from "react-datetime"
-import "react-datetime/css/react-datetime.css"
 import MessageRepository from "./domain/repository/MessagesRepository";
+import {Paper} from "@mui/material";
+// import {useTheme} from '@mui/material/styles';
 
 const links = {
     logOut: "/account/oidc_logout.html",
@@ -62,12 +62,14 @@ class AccountDetailsPage extends React.Component {
     }
 
     render() {
+        // const theme = useTheme();
+
         return (
-            <div>
+            <Paper variant="outlined">
                 <Menu messages={{
-                    title: this.messageRepository.getMessagesFor(this.state.messageRegistry, "common.title"),
-                    logOutLabel: this.messageRepository.getMessagesFor(this.state.messageRegistry, "logout.label")
-                }} links={links}></Menu>
+                          title: this.messageRepository.getMessagesFor(this.state.messageRegistry, "common.title"),
+                          logOutLabel: this.messageRepository.getMessagesFor(this.state.messageRegistry, "logout.label")
+                      }} links={links}></Menu>
 
                 <div className="container">
                     <div className="content">
@@ -89,12 +91,12 @@ class AccountDetailsPage extends React.Component {
                         <div className="form-group">
                             <label
                                 htmlFor="birthDate">{this.messageRepository.getMessagesFor(this.state.messageRegistry, "form.birthDate.label")}</label>
-                            <DatePicker inputProps={{id: "birthDate", ref: this.birthDateInputRef}}
+                            {/*      <DatePicker inputProps={{id: "birthDate", ref: this.birthDateInputRef}}
                                         input={true}
                                         closeOnSelect={true}
                                         dateFormat="DD/MM/YYYY"
                                         isValidDate={() => true}
-                                        timeFormat={false}/>
+                                        timeFormat={false}/>*/}
                         </div>
 
                         <div className="form-group">
@@ -122,7 +124,7 @@ class AccountDetailsPage extends React.Component {
                         </div>
                     </div>
                 </div>
-            </div>
+            </Paper>
         )
     }
 }
