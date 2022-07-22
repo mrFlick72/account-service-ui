@@ -30,6 +30,7 @@
     "@emotion/styled": "^11.9.3",
     "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.9.1",
+    "@mui/x-date-pickers": "^5.0.0-beta.2",
     "babel-loader": "8.2.5",
     "moment": "2.29.4",
     "prop-types": "15.8.1",
