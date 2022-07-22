@@ -16,7 +16,7 @@ export default ({links, messages}) => (
                     <MenuIcon/>
                 </IconButton>
                 <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
-                    <Link href={links.home}>{messages.title}</Link>
+                    <Link href={links.home} underline="none" color="inherit">{messages.title}</Link>
                 </Typography>
                 <form action={links.logOut} method="GET">
                     <Button color="inherit" type="submit">
