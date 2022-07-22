@@ -1,8 +1,9 @@
-import {Grid, TextField} from "@mui/material";
+import {Grid, TextField, useTheme} from "@mui/material";
 import React from "react";
 
 export default function FormInputTextField({id, label, type, required, autoFocus, disabled, suffix, value, handler}) {
-    return <Grid container spacing={8} alignItems="flex-end">
+    const theme = useTheme()
+    return <Grid container spacing={8} alignItems="flex-end" style={theme.formInputText}>
         {suffix && <Grid item>
             {suffix}
         </Grid>}
