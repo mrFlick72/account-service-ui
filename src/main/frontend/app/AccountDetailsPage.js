@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import Menu from "./component/menu/Menu";
 import {getAccountData, save} from "./domain/repository/AccountRepository";
 import {getMessages, getMessagesFor} from "./domain/repository/MessagesRepository";
-import {Container, Grid, Paper, ThemeProvider} from "@mui/material";
+import {Container, Paper, ThemeProvider} from "@mui/material";
 import FormButton from "./component/form/FormButton";
 import FormInputTextField from "./component/form/FormInputTextField";
 import Separator from "./component/form/Separator";
