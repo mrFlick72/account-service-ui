@@ -92,7 +92,7 @@ const AccountDetailsPage = () => {
                 <FormDatePicker
                     value={moment(birthDate, DateFormatPattern)}
                     onClickHandler={(value) => {
-                        let date;
+                        let date = "";
                         try {
                             date = value.format(DateFormatPattern);
                         } catch (e) {
