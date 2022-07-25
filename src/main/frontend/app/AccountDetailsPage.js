@@ -92,7 +92,12 @@ const AccountDetailsPage = () => {
                 <FormDatePicker
                     value={moment(birthDate, DateFormatPattern)}
                     onClickHandler={(value) => {
-                        setBirthDate(value.format(DateFormatPattern))
+                        let date;
+                        try {
+                            date = value.format(DateFormatPattern);
+                        } catch (e) {
+                        }
+                        setBirthDate(date)
                     }}
                     label={getMessagesFor(messageRegistry, "form.birthDate.label")}/>
 
