@@ -14,8 +14,5 @@ export function save(account) {
         },
         body: JSON.stringify(account),
         credentials: 'same-origin'
-    }).then(data => data.json());
-}
-
-export class AccountRepository {
+    });
 }
