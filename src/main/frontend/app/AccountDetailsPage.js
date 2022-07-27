@@ -1,130 +1,141 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import Menu from "./component/menu/Menu";
-import {AccountRepository} from "./domain/repository/AccountRepository";
-import DatePicker from "react-datetime"
-import "react-datetime/css/react-datetime.css"
-import MessageRepository from "./domain/repository/MessagesRepository";
+import {getAccountData, save} from "./domain/repository/AccountRepository";
+import {getMessages, getMessagesFor} from "./domain/repository/MessagesRepository";
+import {Container, Paper, ThemeProvider} from "@mui/material";
+import FormButton from "./component/form/FormButton";
+import FormInputTextField from "./component/form/FormInputTextField";
+import Separator from "./component/form/Separator";
+import {createTheme} from '@mui/material/styles';
+import CheckIcon from '@mui/icons-material/Check';
+import FormDatePicker, {DateFormatPattern} from "./component/form/FormDatePicker";
+import moment from "moment";
 
 const links = {
     logOut: "/account/oidc_logout.html",
     home: "/family-budget/index"
 };
 
-class AccountDetailsPage extends React.Component {
+const AccountDetailsPage = () => {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            messageRegistry: [],
-            firstName: "",
-            lastName: "",
-            phone: "",
-            birthDate: "",
-            mail: ""
-        };
+    const [firstName, setFirstName] = useState("")
+    const [lastName, setLastName] = useState("")
+    const [phone, setPhone] = useState("")
+    const [birthDate, setBirthDate] = useState("")
+    const [mail, setMail] = useState("")
 
-        this.save = this.save.bind(this);
-        this.accountRepository = new AccountRepository();
-        this.messageRepository = new MessageRepository();
+    const [messageRegistry, setMessageRegistry] = useState([])
 
-        this.firstNameInputRef = React.createRef();
-        this.lastNameInputRef = React.createRef();
-        this.phoneInputRef = React.createRef();
-        this.birthDateInputRef = React.createRef();
-        this.mailInputRef = React.createRef();
-    }
 
-    save() {
-        let account = {
-            firstName: this.firstNameInputRef.current.value,
-            lastName: this.lastNameInputRef.current.value,
-            phone: this.phoneInputRef.current.value,
-            birthDate: this.birthDateInputRef.current.value
-        };
+    useEffect(() => {
+        getAccountData().then(data => {
+            setFirstName(data.firstName);
+            setLastName(data.lastName);
+            setPhone(data.phone);
+            setBirthDate(data.birthDate);
+            setMail(data.mail);
+        })
+    }, [])
 
-        this.accountRepository.save(account);
-    }
+    useEffect(() => {
+        getMessages()
+            .then(data => setMessageRegistry((data)))
+    }, [])
 
-    componentDidMount() {
-        this.accountRepository.getAccountData()
-            .then((data) => {
-                this.firstNameInputRef.current.value = data.firstName;
-                this.lastNameInputRef.current.value = data.lastName;
-                this.phoneInputRef.current.value = data.phone;
-                this.birthDateInputRef.current.value = data.birthDate;
-                this.mailInputRef.current.value = data.mail;
-            })
+    const padding = "10px"
+    let theme = createTheme({
+        formInputText: {
+            padding: padding
+        },
+        formButton: {
+            padding: padding
+        },
+        formDatePicker: {
+            padding: padding
+        },
+        palette: {
+            primary: {
+                main: '#252624',
+                contrastText: '#fff',
+            },
+            neutral: {
+                main: '#64748B',
+                contrastText: '#fff',
+            },
+        },
+    });
 
-        this.messageRepository.getMessages()
-            .then((data) => {
-                this.setState({messageRegistry: data})
-            })
-    }
+    return <ThemeProvider theme={theme}>
+        <Paper variant="outlined">
+            <Menu messages={{
+                title: getMessagesFor(messageRegistry, "common.title"),
+                logOutLabel: getMessagesFor(messageRegistry, "logout.label")
+            }} links={links}></Menu>
 
-    render() {
-        return (
-            <div>
-                <Menu messages={{
-                    title: this.messageRepository.getMessagesFor(this.state.messageRegistry, "common.title"),
-                    logOutLabel: this.messageRepository.getMessagesFor(this.state.messageRegistry, "logout.label")
-                }} links={links}></Menu>
+            <Container>
+                <FormInputTextField id="firstName"
+                                    label={getMessagesFor(messageRegistry, "form.firstName.label")}
+                                    required={true}
+                                    handler={(value) => {
+                                        setFirstName(value.target.value)
+                                    }}
+                                    value={firstName || ""}/>
 
-                <div className="container">
-                    <div className="content">
-                        <div className="form-group">
-                            <label
-                                htmlFor="firstName">{this.messageRepository.getMessagesFor(this.state.messageRegistry, "form.firstName.label")} </label>
-                            <input type="text" className="form-control" ref={this.firstNameInputRef}
-                                   id="firstName"
-                                   placeholder={this.messageRepository.getMessagesFor(this.state.messageRegistry, "form.firstName.placeholder")}/>
-                        </div>
-                        <div className="form-group">
-                            <label
-                                htmlFor="lastName">{this.messageRepository.getMessagesFor(this.state.messageRegistry, "form.lastName.label")}</label>
-                            <input type="text" className="form-control" ref={this.lastNameInputRef}
-                                   id="lastName"
-                                   placeholder={this.messageRepository.getMessagesFor(this.state.messageRegistry, "form.lastName.placeholder")}/>
-                        </div>
+                <FormInputTextField id="lastName"
+                                    label={getMessagesFor(messageRegistry, "form.lastName.label")}
+                                    required={true}
+                                    handler={(value) => {
+                                        setLastName(value.target.value)
+                                    }}
+                                    value={lastName || ""}/>
 
-                        <div className="form-group">
-                            <label
-                                htmlFor="birthDate">{this.messageRepository.getMessagesFor(this.state.messageRegistry, "form.birthDate.label")}</label>
-                            <DatePicker inputProps={{id: "birthDate", ref: this.birthDateInputRef}}
-                                        input={true}
-                                        closeOnSelect={true}
-                                        dateFormat="DD/MM/YYYY"
-                                        isValidDate={() => true}
-                                        timeFormat={false}/>
-                        </div>
+                <FormDatePicker
+                    value={moment(birthDate, DateFormatPattern)}
+                    onClickHandler={(value) => {
+                        let date = "";
+                        try {
+                            date = value.format(DateFormatPattern);
+                        } catch (e) {
+                        }
+                        setBirthDate(date)
+                    }}
+                    label={getMessagesFor(messageRegistry, "form.birthDate.label")}/>
 
-                        <div className="form-group">
-                            <label
-                                htmlFor="phone">{this.messageRepository.getMessagesFor(this.state.messageRegistry, "form.phone.label")}</label>
-                            <input type="text" className="form-control" ref={this.phoneInputRef}
-                                   id="phone"
-                                   placeholder={this.messageRepository.getMessagesFor(this.state.messageRegistry, "form.phone.placeholder")}/>
-                        </div>
+                <FormInputTextField id="phone"
+                                    label={getMessagesFor(messageRegistry, "form.phone.label")}
+                                    required={true}
+                                    handler={(value) => {
+                                        setPhone(value.target.value)
+                                    }}
+                                    value={phone || ""}/>
 
-                        <div className="form-group">
-                            <label
-                                htmlFor="mail">{this.messageRepository.getMessagesFor(this.state.messageRegistry, "form.mail.label")}</label>
-                            <input type="text" className="form-control" ref={this.mailInputRef}
-                                   id="mail"
-                                   placeholder={this.messageRepository.getMessagesFor(this.state.messageRegistry, "form.mail.placeholder")}
-                                   readOnly="readonly"/>
-                        </div>
+                <FormInputTextField id="mail"
+                                    label={getMessagesFor(messageRegistry, "form.mail.label")}
+                                    required={true}
+                                    disabled={true}
+                                    handler={(value) => {
+                                        setMail(value.target.value)
+                                    }}
+                                    value={mail || ""}/>
 
-                        <div className="form-group">
+                <Separator/>
 
-                            <button type="submit" className="btn btn-success" onClick={this.save}>
-                                <i className="fas fa-check fa-lg"></i> {this.messageRepository.getMessagesFor(this.state.messageRegistry, "form.save.value")}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        )
-    }
+                <FormButton type="button"
+                            onClickHandler={() => {
+                                save({
+                                    "email": mail,
+                                    "firstName": firstName,
+                                    "lastName": lastName,
+                                    "phone": phone,
+                                    "birthDate": birthDate
+                                })
+                            }}
+                            labelPrefix={<CheckIcon fontSize="large"/>}
+                            label={getMessagesFor(messageRegistry, "form.save.value")}/>
+
+            </Container>
+        </Paper>
+    </ThemeProvider>
 }
 
 export default AccountDetailsPage
