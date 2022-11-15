@@ -68,8 +68,10 @@ public class RepositoryConfig {
     }
 
     @Bean
-    public RestTemplate i18nRestTemplate() {
-        return new RestTemplate();
+    public RestTemplate i18nRestTemplate(OAuth2TokenResolver oAuth2TokenResolver) {
+       return new RestTemplateBuilder()
+                .additionalInterceptors(new BearerTokenInterceptor(oAuth2TokenResolver))
+                .build();
     }
 
     @Bean
