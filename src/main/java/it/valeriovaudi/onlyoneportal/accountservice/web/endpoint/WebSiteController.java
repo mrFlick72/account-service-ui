@@ -23,6 +23,6 @@ public class WebSiteController {
         model.addAttribute("rpSessionManagementIFrame", rpUiHost + "/session/management");
         model.addAttribute("opSessionManagementIFrame", vauthenticatorHost + "/session/management");
 
-        return "site/index";
+        return "index";
     }
 }
