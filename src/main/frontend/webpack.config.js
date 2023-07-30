@@ -3,7 +3,6 @@ var path = require('path');
 const BUID_DIR = path.resolve(__dirname + "../../../../target/classes/static");
 
 module.exports = {
-    mode: 'production',
     entry: {
         account: path.resolve(__dirname, './app/index.js'),
     },

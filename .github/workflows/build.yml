@@ -17,26 +17,19 @@ jobs:
           sudo apt -y install nodejs
           sudo apt -y install npm
 
-      - name: install openjdk
-        run: |
-          sudo apt-get update && sudo apt-get install openjdk-17-jdk
-          sudo update-alternatives --set java /usr/lib/jvm/java-17-openjdk-amd64/bin/java
-          sudo update-alternatives --set javac /usr/lib/jvm/java-17-openjdk-amd64/bin/javac
-          java -version
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: 'corretto'
 
-      - name: build testing environment
-        run: |
-          export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
-
-          git clone https://github.com/mrFlick72/client-security-starter.git
-          cd client-security-starter
-          mvn clean install -q
 
       - name: Build frontend artifacts
         run: |
           cd src/main/frontend
           npm install
-          npm run-script build
+          npm run-script production-build
+
 
       - name: Build
         run: |
