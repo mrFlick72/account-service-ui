@@ -24,7 +24,7 @@ const AccountDetailsPage = () => {
     const [birthDate, setBirthDate] = useState("")
     const [mail, setMail] = useState("")
 
-    const [messageRegistry, setMessageRegistry] = useState([])
+    const [messageRegistry, setMessageRegistry] = useState({})
 
 
     useEffect(() => {
@@ -38,8 +38,7 @@ const AccountDetailsPage = () => {
     }, [])
 
     useEffect(() => {
-        getMessages()
-            .then(data => setMessageRegistry((data)))
+        setMessageRegistry(getMessages())
     }, [])
 
     const padding = "10px"

@@ -1,22 +1,18 @@
-export default class MessageRepository {
-
-    getMessages() {
-        return fetch("/account/messages", {
-            method: "GET",
-            credentials: 'same-origin'
-        }).then(data => data.json());
-    }
-
-    getMessagesFor(bundle, label) {
-        return bundle ? bundle[label] || "" : ""
-    }
-}
-
 export function getMessages() {
-    return fetch("/account/messages", {
-        method: "GET",
-        credentials: 'same-origin'
-    }).then(data => data.json());
+    return {
+        "common.title": "Only One Portal - Account",
+        "logout.label": "Log Out",
+        "form.firstName.label": "First Name:",
+        "form.firstName.placeholder": "First Name",
+        "form.lastName.label": "Last Name:",
+        "form.lastName.placeholder": "Last Name",
+        "form.birthDate.label": "Birth Date:",
+        "form.phone.label": "Phone:",
+        "form.phone.placeholder": "Phone",
+        "form.mail.label": "Mail:",
+        "form.mail.placeholder": "Mail",
+        "form.save.value": "Save changes"
+    }
 }
 
 export function getMessagesFor(bundle, label) {
