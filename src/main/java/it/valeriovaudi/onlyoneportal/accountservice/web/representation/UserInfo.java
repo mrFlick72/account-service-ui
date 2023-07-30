@@ -1,37 +1,20 @@
 package it.valeriovaudi.onlyoneportal.accountservice.web.representation;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
-@Data
-@ToString
-@EqualsAndHashCode
-public class UserInfo {
+public record UserInfo(
+        @JsonProperty("given_name")
+        String firstName,
 
-    @JsonProperty("given_name")
-    private String firstName;
+        @JsonProperty("family_name")
+        String lastName,
 
-    @JsonProperty("family_name")
-    private String lastName;
+        @JsonProperty("birthdate")
+        String birthDate,
 
-    @JsonProperty("birthdate")
-    private String birthDate;
+        @JsonProperty("email")
+        String mail,
 
-    @JsonProperty("email")
-    private String mail;
-
-    @JsonProperty("phone_number")
-    private String phone;
-
-    public UserInfo() { }
-
-    public UserInfo(String firstName, String lastName, String birthDate, String mail, String phone) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthDate = birthDate;
-        this.mail = mail;
-        this.phone = phone;
-    }
+        @JsonProperty("phone_number")
+        String phone) {
 }

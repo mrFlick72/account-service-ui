@@ -18,11 +18,11 @@ public class VAuthenticatorAccountRepository implements AccountRepository {
     public Account findAnAccount() {
         UserInfo userInfo = restTemplate.getForObject(baseUrl + "/userinfo", UserInfo.class);
         return new Account(
-                userInfo.getFirstName(),
-                userInfo.getLastName(),
-                userInfo.getBirthDate(),
-                userInfo.getMail(),
-                userInfo.getPhone()
+                userInfo.firstName(),
+                userInfo.lastName(),
+                userInfo.birthDate(),
+                userInfo.mail(),
+                userInfo.phone()
         );
     }
 

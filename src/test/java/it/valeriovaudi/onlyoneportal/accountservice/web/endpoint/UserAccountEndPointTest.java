@@ -1,16 +1,15 @@
 package it.valeriovaudi.onlyoneportal.accountservice.web.endpoint;
 
+import com.vauthenticator.springbootclientstarter.session.management.OAuth2AuthorizationRequestResolverWithSessionState;
 import it.valeriovaudi.onlyoneportal.accountservice.TestingFixture;
 import it.valeriovaudi.onlyoneportal.accountservice.domain.UpdateAccount;
 import it.valeriovaudi.onlyoneportal.accountservice.domain.repository.AccountRepository;
 import it.valeriovaudi.onlyoneportal.accountservice.support.WithMockOidcUser;
 import it.valeriovaudi.onlyoneportal.accountservice.web.representation.Account;
-import it.valeriovaudi.vauthenticator.security.clientsecuritystarter.session.management.OAuth2AuthorizationRequestResolverWithSessionState;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;

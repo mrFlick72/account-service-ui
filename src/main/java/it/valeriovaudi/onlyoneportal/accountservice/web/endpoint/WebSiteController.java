@@ -18,7 +18,7 @@ public class WebSiteController {
     }
 
 
-    @GetMapping("/site/index.html")
+    @GetMapping("/index")
     public String view(Model model) {
         model.addAttribute("rpSessionManagementIFrame", rpUiHost + "/session/management");
         model.addAttribute("opSessionManagementIFrame", vauthenticatorHost + "/session/management");

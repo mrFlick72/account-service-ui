@@ -1,7 +1,7 @@
 package it.valeriovaudi.onlyoneportal.accountservice;
 
+import com.vauthenticator.springbootclientstarter.security.RedisOAuth2AuthorizedClientService;
 import io.micrometer.core.instrument.MeterRegistry;
-import it.valeriovaudi.vauthenticator.security.clientsecuritystarter.security.RedisOAuth2AuthorizedClientService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.actuate.autoconfigure.metrics.MeterRegistryCustomizer;

@@ -19,5 +19,4 @@ public class UpdateAccount {
         accountRepository.save(account);
     }
 
-
 }

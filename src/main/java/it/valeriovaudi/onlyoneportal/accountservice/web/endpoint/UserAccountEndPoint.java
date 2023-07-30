@@ -1,10 +1,10 @@
 package it.valeriovaudi.onlyoneportal.accountservice.web.endpoint;
 
+import com.vauthenticator.springbootclientstarter.user.VAuthenticatorUserNameResolver;
 import it.valeriovaudi.onlyoneportal.accountservice.adapters.date.Dates;
 import it.valeriovaudi.onlyoneportal.accountservice.domain.UpdateAccount;
 import it.valeriovaudi.onlyoneportal.accountservice.domain.repository.AccountRepository;
 import it.valeriovaudi.onlyoneportal.accountservice.web.representation.Account;
-import it.valeriovaudi.vauthenticator.security.clientsecuritystarter.user.VAuthenticatorUserNameResolver;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -36,14 +36,14 @@ public class UserAccountEndPoint {
     @GetMapping(ENDPOINT_PREFIX)
     public ResponseEntity getAccountDetails() {
         Account account = accountRepository.findAnAccount();
-        TemporalAccessor parsedBirthDate = Dates.ISO_DATE_FORMATTER.parse(account.getBirthDate());
+        TemporalAccessor parsedBirthDate = Dates.ISO_DATE_FORMATTER.parse(account.birthDate());
         return ok().body(
                 new Account(
-                        account.getFirstName(),
-                        account.getLastName(),
+                        account.firstName(),
+                        account.lastName(),
                         Dates.UI_DATE_FORMATTER.format(parsedBirthDate),
-                        account.getMail(),
-                        account.getPhone()
+                        account.mail(),
+                        account.phone()
                 )
         );
     }
@@ -51,15 +51,14 @@ public class UserAccountEndPoint {
     @PutMapping(ENDPOINT_PREFIX)
     public ResponseEntity updateAccountDetails(Principal principal,
                                                @RequestBody Account account) {
-        TemporalAccessor parsedBirthDate = Dates.UI_DATE_FORMATTER.parse(account.getBirthDate());
+        TemporalAccessor parsedBirthDate = Dates.UI_DATE_FORMATTER.parse(account.birthDate());
         String username = vAuthenticatorUserNameResolver.getUserNameFor(principal);
-        account.setMail(username);
         updateAccount.execute(new Account(
-                account.getFirstName(),
-                account.getLastName(),
+                account.firstName(),
+                account.lastName(),
                 Dates.ISO_DATE_FORMATTER.format(parsedBirthDate),
-                account.getMail(),
-                account.getPhone()
+                username,
+                account.phone()
         ));
         return noContent().build();
     }
